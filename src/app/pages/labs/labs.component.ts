@@ -14,5 +14,14 @@ export class LabsComponent {
     'Instalar el Angular CLI',
     'Crear proyecto',
     'Crear componente'
-  ]
+  ];
+  name = "Carlos";
+  age = 22;
+  disabled = true;
+  img = "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2558760599.jpg";
+
+  person = {
+    name: "Carlos",
+    age: 22
+  }
 }

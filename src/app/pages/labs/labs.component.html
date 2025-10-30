@@ -9,7 +9,7 @@
   <hr>
   <h2>{{ "Hola".repeat(4)  }}</h2>
   <p>La suma es 3 + 3 es {{ 3 + 3 }}</p>
-  <p>Hola, soy {{ name }} y mi edad es {{ age }} años</p>
+  <p>Hola, soy {{ name() }} y mi edad es {{ age }} años</p>
   <hr>
   <img [src]="img" alt="Image">
   <input type="number" [value]="person.age">
@@ -22,4 +22,8 @@
   <input type="number" [value]="person.age" (change)="changeHandler($event)">
   <p>(keydown)</p>
   <input type="text" [value]="person.name" (keydown.shift.t)="clickHandler()">
+  <hr>
+  <h1>Signals</h1>
+  <input type="text" [value]="name()" (change)="changeHandler($event)">
+  <p>name: {{ name() }}</p>
 </div>

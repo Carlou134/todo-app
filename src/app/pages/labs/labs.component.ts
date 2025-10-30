@@ -24,4 +24,12 @@ export class LabsComponent {
     name: "Carlos",
     age: 22
   }
+
+  clickHandler() {
+    alert('Hola');
+  }
+
+  changeHandler(event: Event) {
+    console.log(event);
+  }
 }

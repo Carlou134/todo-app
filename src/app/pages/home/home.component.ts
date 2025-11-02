@@ -114,7 +114,7 @@ export class HomeComponent implements OnInit {
           if(position === index){
             return {
               ...task,
-              text: value,
+              title: value,
               editing: false
             }
           }

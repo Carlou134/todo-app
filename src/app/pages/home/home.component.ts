@@ -1,11 +1,11 @@
-import { NgFor } from '@angular/common';
+import { JsonPipe, NgFor } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { Tasks } from '../../models/task.model';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, JsonPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -40,5 +40,19 @@ export class HomeComponent {
 
     deleteTask(index: number){
       this.tasks.update((tasks) => tasks.filter((task, position) => position !== index));
+    }
+
+    updateTask(index: number){
+      this.tasks.update((tasks) => {
+        return tasks.map((task, position) => {
+          if(position === index){
+            return {
+              ...task,
+              completed: !task.completed
+            }
+          }
+          return task;
+        })
+      })
     }
 }

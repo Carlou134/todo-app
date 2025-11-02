@@ -1,4 +1,4 @@
-import { NgFor, NgIf, NgClass } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Component, computed, signal, effect, OnInit, inject, Injector } from '@angular/core';
 import { Tasks } from '../../models/task.model';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -6,7 +6,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor, NgIf, ReactiveFormsModule, NgClass],
+  imports: [NgFor, NgIf, ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

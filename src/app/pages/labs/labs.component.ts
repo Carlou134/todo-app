@@ -1,10 +1,12 @@
 import { NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
-import { Component, input, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-labs',
   standalone: true,
-  imports: [NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault],
+  imports: [NgFor, NgIf, NgSwitch, NgSwitchCase,
+    NgSwitchDefault, ReactiveFormsModule],
   templateUrl: './labs.component.html',
   styleUrl: './labs.component.css'
 })
@@ -25,6 +27,14 @@ export class LabsComponent {
     age: 22,
     avatar: this.img
   });
+
+  colorCtrl = new FormControl();
+
+  constructor(){
+    this.colorCtrl.valueChanges.subscribe(value => {
+      console.log(value);
+    });
+  }
 
   clickHandler() {
     alert('Hola');

@@ -1,11 +1,11 @@
-import { JsonPipe, NgFor } from '@angular/common';
+import { JsonPipe, NgFor, NgIf } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { Tasks } from '../../models/task.model';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor, JsonPipe],
+  imports: [NgFor, JsonPipe, NgIf],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

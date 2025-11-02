@@ -1,33 +1,21 @@
-import { NgFor, NgIf } from '@angular/common';
-import { Component, computed, signal } from '@angular/core';
+import { NgFor, NgIf, NgClass } from '@angular/common';
+import { Component, computed, signal, effect, OnInit, inject, Injector } from '@angular/core';
 import { Tasks } from '../../models/task.model';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor, NgIf, ReactiveFormsModule],
+  imports: [NgFor, NgIf, ReactiveFormsModule, NgClass],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
-  tasks = signal<Tasks[]>([
-    {
-      id: Date.now(),
-      title: "Crear Proyecto",
-      completed: false
-    },
-    {
-      id: Date.now(),
-      title: "Crear componente",
-      completed: false
-    },
-    ]);
-
-    filter = signal<'all'| 'pending' | 'completed'>('all');
-    tasksByFilter = computed(() => {
-      const filter = this.filter();
-      const tasks = this.tasks();
+export class HomeComponent implements OnInit {
+  tasks = signal<Tasks[]>([]);
+  filter = signal<'all'| 'pending' | 'completed'>('all');
+  tasksByFilter = computed(() => {
+  const filter = this.filter();
+  const tasks = this.tasks();
       if(filter === 'pending'){
         return tasks.filter(task => !task.completed)
       }
@@ -43,6 +31,25 @@ export class HomeComponent {
         Validators.required,
       ]
     })
+
+    injector = inject(Injector);
+
+    ngOnInit(){
+      const storage = localStorage.getItem('tasks');
+      if(storage){
+        const tasks = JSON.parse(storage);
+        console.log(tasks);
+        this.tasks.set(tasks);
+      }
+      this.trackTasks();
+    }
+
+    trackTasks(){
+      effect(() => {
+        const tasks = this.tasks();
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+      }, {injector: this.injector});
+    }
 
     changeHandler(){
       if(this.newTaskCtrl.valid){

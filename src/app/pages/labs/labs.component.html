@@ -44,6 +44,9 @@
     Soy Carlos y soy mayor de 18
   </ng-template>
   <hr>
+  @if (name() === 'Carlos') {
+    <div>Soy Carlos</div>
+  }
   <input type="text" [value]="person().name" (change)="changeName($event)">
   <div [ngSwitch]="person().name">
     <div *ngSwitchCase="'Carlos'">soy Carlos</div>
@@ -69,4 +72,11 @@
   <p>
     <input type="text">
   </p>
+  <ul>
+    @for (task of tasks(); track task; let i = $index) {
+      <li>{{ i }} {{ task }}</li>
+    } @empty{
+      <li><strong>La lista esta vacia</strong></li>
+    }
+  </ul>
 </div>

@@ -1,27 +1,50 @@
-# TodoApp
+# Todo App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.4.
+> A simple task manager built to practice Angular Signals-based reactivity, deployed on Firebase Hosting.
 
-## Development server
+![Todo App screenshot](docs/screenshots/home.png)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+---
 
-## Code scaffolding
+## 🧩 Problem / Context
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Personal project built in 2025 to get hands-on with Angular's Signals API (`signal`, `computed`, `effect`) as a replacement for the classic RxJS + Zone.js change detection flow, using standalone components end to end.
 
-## Build
+---
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 🛠️ Stack
 
-## Running unit tests
+| Layer           | Technology            |
+|-----------------|------------------------|
+| Frontend        | Angular 18 (standalone components, Signals) |
+| State           | Angular Signals (`signal`, `computed`, `effect`) |
+| Persistence     | `localStorage`          |
+| Deploy / Infra  | Firebase Hosting        |
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+---
 
-## Running end-to-end tests
+## 🏗️ Architecture
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- Standalone components (no `NgModule`), routed via `app.routes.ts`.
+- Reactive state handled entirely with Signals: `tasks` as the source of truth, `tasksByFilter` as a `computed` derived view (all / pending / completed).
+- An `effect()` syncs the `tasks` signal to `localStorage` on every change, so state survives a page reload without a backend.
 
-## Further help
+---
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 🧠 Technical challenges and decisions
+
+- **Problem:** persist tasks without adding a backend or database. → **Solution:** an `effect()` watches the `tasks` signal and writes it to `localStorage` on every change, restoring it on `ngOnInit`. → **Why:** keeps the app fully client-side while still surviving reloads — enough for the scope of this project.
+- **Problem:** derive filtered views (all/pending/completed) without manual re-computation. → **Solution:** `computed()` over the `tasks` and `filter` signals. → **Why:** it recalculates automatically and only when its dependencies change, avoiding manual subscriptions.
+
+---
+
+## 🚀 Running it locally
+
+```bash
+git clone https://github.com/Carlou134/todo-app.git
+cd todo-app
+pnpm install
+pnpm start
+```
+
+Navigate to `http://localhost:4200/`.
